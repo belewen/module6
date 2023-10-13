@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import ButtonForwardLoading from "./Buttons";
+import ProgressBar from "./ProgressBar";
 
 const MAX_LOADING_BAR = 100;
 
@@ -7,23 +9,33 @@ function LoadingComponent() {
   const [firstLoad, setFirstLoad] = useState(10);
   const [secondLoad, setSecondLoad] = useState(30);
 
-  function increaseFirstLoad() {
+  const increaseFirstLoad = useCallback(() => {
     console.log("Je suis dans increaseFirstLoad");
-    if (firstLoad < MAX_LOADING_BAR) {
-      setFirstLoad(firstLoad + 10);
-    }
-  }
+    setFirstLoad((prevValue) => {
+      if (prevValue < MAX_LOADING_BAR) {
+        return prevValue + 10;
+      }
+      return prevValue;
+    });
+  }, [firstLoad]);
 
-  function increaseSecondLoad() {
+  const increaseSecondLoad = useCallback(() => {
     console.log("Je suis dans increaseSecondLoad");
-    if (secondLoad < MAX_LOADING_BAR) {
-      setSecondLoad(secondLoad + 10);
-    }
-  }
+    setSecondLoad((prevValue) => {
+      if (prevValue < MAX_LOADING_BAR) {
+        return prevValue + 10;
+      }
+      return prevValue;
+    });
+  }, [secondLoad]);
 
   return (
     <div>
       <h1>Les callBack</h1>
+      <p>
+        Ouvrez la console pour voir les log de chargement de fonction et
+        composants
+      </p>
       <ProgressBar
         value={firstLoad}
         max={MAX_LOADING_BAR}
@@ -50,29 +62,8 @@ function LoadingComponent() {
         color="green"
         handleClick={increaseSecondLoad}
       >
-        Deuxième chargement -10%
+        Deuxième chargement +10%
       </ButtonForwardLoading>
-    </div>
-  );
-}
-
-function ButtonForwardLoading({ color, children, handleClick, text }) {
-  console.log(`Je suis dans ButtonForwardLoad ${text}`);
-  return (
-    <button
-      onClick={handleClick}
-      style={{ backgroundColor: color, margin: 10, height: 40 }}
-    >
-      {children}
-    </button>
-  );
-}
-
-function ProgressBar({ value, max, color, text }) {
-  console.log(`Je suis dans ProgressBar ${text}`);
-  return (
-    <div style={{ border: `solid 4px ${color}`, padding: "10px" }}>
-      <progress value={value} max={max}></progress>;<p>Loading : {value} %</p>
     </div>
   );
 }

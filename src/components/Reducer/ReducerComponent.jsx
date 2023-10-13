@@ -80,7 +80,7 @@ export default function ReducerComponent() {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          margin: "auto",
+
           gap: 10,
         }}
       >

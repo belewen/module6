@@ -1,0 +1,16 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 30px auto;
+  gap: 20px;
+}
+
+.app h1 {
+  color: white;
+  font-size: larger;
+  border: solid 2px black;
+  padding: 1rem;
+  background-color: black;
+  margin-top: 5em;
+}
